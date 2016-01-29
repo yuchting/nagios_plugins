@@ -1,0 +1,28 @@
+#!/bin/sh
+#Ensure 3 arg
+if [ -z $1 ] || [ -z $2 ] || [ -z $3 ];then
+     echo "Please include 3 arguments, eg."
+     echo "Usage: $0 {process name} {warning} {critical}"
+     exit 3
+fi
+
+#Ensure warning is greater than critical limit
+if [ $2 -gt $3 ];then
+  echo "Please ensure warning is greater than critical, eg."
+  echo "Usage: $0 20 10"
+  exit 3
+fi
+
+PID=(`ps -A | grep $1 | awk '{print $1}'`)
+num=`ps mp $PID -o THREAD,tid | grep root -c`
+
+if [ $num -gt $3 ];then
+        echo "CRITICAL: $num | Thread=$num;$2;$3;;"
+        exit 2
+elif [ $num -gt $2 ];then
+        echo "WARNING: $num | Thread=$num;$2;$3;;"
+        exit 1
+else
+        echo "OK: $num | Thread=$num;$2;$3;;"
+        exit 0
+fi
