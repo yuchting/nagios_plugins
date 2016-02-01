@@ -30,6 +30,6 @@ elif [ $CPUUSED -gt $1 ];then
         echo "WARNING: Used=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
         exit 1
 else
-        echo "OK: Idle=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
+        echo "OK: Used=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
         exit 0
 fi
