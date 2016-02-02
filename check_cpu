@@ -24,12 +24,12 @@ CPUUSYS=`echo ${CPU}|awk '{print $6}'|awk -F. '{print $1}'`
 CPUIO=`echo ${CPU}|awk '{print $7}'|awk -F. '{print $1}'`
 
 if [ $CPUUSED -gt $2 ];then
-        echo "CRITICAL: Used=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
+        echo "CRITICAL: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
         exit 2
 elif [ $CPUUSED -gt $1 ];then
-        echo "WARNING: Used=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
+        echo "WARNING: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
         exit 1
 else
-        echo "OK: Used=$CPUUSED% | CpuUsed=$CPUUSED% CpuUser=$CPUUSER% CpuSys=$CPUUSYS% CpuIOWait=$CPUIO%"
+        echo "OK: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
         exit 0
 fi
