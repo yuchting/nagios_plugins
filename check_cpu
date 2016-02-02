@@ -16,20 +16,21 @@ if [ $1 -gt $2 ];then
 fi
 
 CPU=`/usr/bin/mpstat 1 1|grep all|tail -1`
-CPUIDLE=`echo ${CPU}|awk '{print $12}'|awk -F. '{print $1}'`
-CPUUSED=`expr 100 - $CPUIDLE`
+CPUIDLE=`echo ${CPU}|awk '{print $12}'`
+CPUUSED=`echo $CPUIDLE|awk '{printf "%.2f\n",100-$1}'`
+CPUUSED_INT=`echo $CPUUSED|awk -F. '{print $1}'`
 
-CPUUSER=`echo ${CPU}|awk '{print $3}'|awk -F. '{print $1}'`
-CPUUSYS=`echo ${CPU}|awk '{print $5}'|awk -F. '{print $1}'`
-CPUIO=`echo ${CPU}|awk '{print $6}'|awk -F. '{print $1}'`
+CPUUSER=`echo ${CPU}|awk '{print $3}'`
+CPUUSYS=`echo ${CPU}|awk '{print $5}'`
+CPUIO=`echo ${CPU}|awk '{print $6}'`
 
-if [ $CPUUSED -gt $2 ];then
-        echo "CRITICAL: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
+if [ $CPUUSED_INT -gt $2 ];then
+        echo "CRITICAL: Used=$CPUUSED% | CpuUsed=$CPUUSED; CpuUser=$CPUUSER; CpuSys=$CPUUSYS; CpuIOWait=$CPUIO"
         exit 2
-elif [ $CPUUSED -gt $1 ];then
-        echo "WARNING: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
+elif [ $CPUUSED_INT -gt $1 ];then
+        echo "WARNING: Used=$CPUUSED% | CpuUsed=$CPUUSED; CpuUser=$CPUUSER; CpuSys=$CPUUSYS; CpuIOWait=$CPUIO"
         exit 1
 else
-        echo "OK: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
+        echo "OK: Used=$CPUUSED% | CpuUsed=$CPUUSED; CpuUser=$CPUUSER; CpuSys=$CPUUSYS; CpuIOWait=$CPUIO"
         exit 0
 fi
