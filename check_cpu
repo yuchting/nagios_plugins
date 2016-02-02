@@ -15,13 +15,14 @@ if [ $1 -gt $2 ];then
   exit 3
 fi
 
-CPU=`/usr/bin/mpstat|grep all|tail -1`
-CPUIDLE=`echo ${CPU}|awk '{print $13}'|awk -F. '{print $1}'` 
+CPU=`/usr/bin/mpstat 1 1|grep all|tail -1`
+echo $CPU
+CPUIDLE=`echo ${CPU}|awk '{print $12}'|awk -F. '{print $1}'`
 CPUUSED=`expr 100 - $CPUIDLE`
 
-CPUUSER=`echo ${CPU}|awk '{print $4}'|awk -F. '{print $1}'`
-CPUUSYS=`echo ${CPU}|awk '{print $6}'|awk -F. '{print $1}'`
-CPUIO=`echo ${CPU}|awk '{print $7}'|awk -F. '{print $1}'`
+CPUUSER=`echo ${CPU}|awk '{print $3}'|awk -F. '{print $1}'`
+CPUUSYS=`echo ${CPU}|awk '{print $5}'|awk -F. '{print $1}'`
+CPUIO=`echo ${CPU}|awk '{print $6}'|awk -F. '{print $1}'`
 
 if [ $CPUUSED -gt $2 ];then
         echo "CRITICAL: Used=$CPUUSED% | CpuUsed=$CPUUSED CpuUser=$CPUUSER CpuSys=$CPUUSYS CpuIOWait=$CPUIO"
