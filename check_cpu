@@ -16,7 +16,6 @@ if [ $1 -gt $2 ];then
 fi
 
 CPU=`/usr/bin/mpstat 1 1|grep all|tail -1`
-echo $CPU
 CPUIDLE=`echo ${CPU}|awk '{print $12}'|awk -F. '{print $1}'`
 CPUUSED=`expr 100 - $CPUIDLE`
 
