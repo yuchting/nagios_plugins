@@ -124,7 +124,7 @@ CRIT_WRITE="$(echo "$CRITICAL" | cut -d , -f 4)"
 CURRENT_RUN_TIMESTAMP="$(date +%s)"
 
 # Current stats
-read CURRENT_IO_READ junk CURRENT_SECTOR_READ junk CURRENT_IO_WRITE junk CURRENT_SECTOR_WRITE junk junk junk CURRENT_WAIT < /sys/block/$DISK/stat
+read CURRENT_IO_READ junk CURRENT_SECTOR_READ junk CURRENT_IO_WRITE junk CURRENT_SECTOR_WRITE junk junk junk CURRENT_WAIT junk junk junk junk < /sys/block/$DISK/stat
 [ -z "$CURRENT_IO_READ" -o -z "$CURRENT_SECTOR_READ" -o -z "$CURRENT_IO_WRITE" -o -z "$CURRENT_SECTOR_WRITE" -o -z "$CURRENT_WAIT" ] && \
 p_unknown "Invalid current block stats"
 
@@ -139,7 +139,7 @@ fi
 
 # Previous stats
 [ -r "$PREVIOUS_STAT_FILE" ] || p_unknown "Unable to read the previous disk stats"
-read PREVIOUS_RUN_TIMESTAMP PREVIOUS_IO_READ PREVIOUS_SECTOR_READ PREVIOUS_IO_WRITE PREVIOUS_SECTOR_WRITE PREVIOUS_WAIT < $PREVIOUS_STAT_FILE
+read PREVIOUS_RUN_TIMESTAMP PREVIOUS_IO_READ PREVIOUS_SECTOR_READ PREVIOUS_IO_WRITE PREVIOUS_SECTOR_WRITE PREVIOUS_WAIT junk junk junk junk < $PREVIOUS_STAT_FILE
 [ -z "$PREVIOUS_IO_READ" -o -z "$PREVIOUS_SECTOR_READ" -o -z "$PREVIOUS_IO_WRITE" -o -z "$PREVIOUS_SECTOR_WRITE" -o -z "$PREVIOUS_WAIT" ] && \
 rm -f "$PREVIOUS_STAT_FILE" && p_unknown "Invalid previous block stats"
 
