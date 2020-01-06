@@ -17,7 +17,7 @@ PID=(`ps -A | grep $1 | awk '{print $1}'`)
 
 if [ "$PID" == "" ]; then
     echo "CRITICAL: 0 | Thread=0;$2;$3;;"
-    exit 3
+    exit 2
 fi
 
 num=`ps mp $PID -o THREAD,tid | grep root -c`
