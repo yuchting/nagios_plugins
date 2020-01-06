@@ -9,11 +9,17 @@ fi
 #Ensure warning is greater than critical limit
 if [ $2 -gt $3 ];then
   echo "Please ensure warning is greater than critical, eg."
-  echo "Usage: $0 20 10"
+  echo "Usage: $0 20 10 [0 0]"
   exit 3
 fi
 
 PID=(`ps -A | grep $1 | awk '{print $1}'`)
+
+if [ "$PID" == "" ]; then
+    echo "CRITICAL: 0 | Thread=0;$2;$3;;"
+    exit 3
+fi
+
 num=`ps mp $PID -o THREAD,tid | grep root -c`
 
 if [ $num -gt $3 ];then
@@ -26,3 +32,4 @@ else
         echo "OK: $num | Thread=$num;$2;$3;;"
         exit 0
 fi
+
