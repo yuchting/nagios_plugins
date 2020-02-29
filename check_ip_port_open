@@ -1,4 +1,6 @@
 #!/bin/sh
+# this command is different with check_tcp it can check remote ip:port state not just host
+# it dependents nmap command
 
 if [ -z $1 ] || [ -z $2 ];then
      echo "Please include 2 arguments, eg."
@@ -7,6 +9,7 @@ if [ -z $1 ] || [ -z $2 ];then
 fi
 
 result=`nmap -p $2 -Pn $1 | grep open`
+
 if [ "$result" = "" ]; then
      echo "CRITICAL: 0 | ESTABLISHED=0;;;;"
      exit 2
