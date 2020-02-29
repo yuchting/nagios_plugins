@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ -z $1 ] || [ -z $2 ];then
+     echo "Please include 2 arguments, eg."
+     echo "Usage: $0 {ip or host} {port}"
+     exit 3
+fi
+
+result=`nmap -p $2 -Pn $1 | grep open`
+if [ "$result" = "" ]; then
+     echo "CRITICAL: 0 | ESTABLISHED=0;;;;"
+     exit 2
+else
+     echo "OK: 1 | ESTABLISHED=1;;;;"
+     exit 0
+fi
